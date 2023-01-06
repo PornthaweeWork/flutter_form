@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
+  var gender = 'male';
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +20,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               buildTextField(),
+              buildRadio(),
               ElevatedButton(
                 onPressed: () {
                   print('Name: ${nameController.text} ${surnameController.text}');
+                   print('Gender: ${gender}');
                 },
                 child: Text('บันทึก'),
               ),
@@ -26,6 +34,23 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildRadio() => Column(
+    children: [
+      RadioListTile(
+        title: Text('ชาย'),
+        value: 'male',
+        groupValue: gender,
+        onChanged: (value) => setState(() => gender = value.toString()),
+        ),
+        RadioListTile(
+        title: Text('หญิง'),
+        value: 'female',
+        groupValue: gender,
+        onChanged: (value) => setState(() => gender = value.toString()),
+        ),
+    ],
+  );
 
   Widget buildTextField() => Column(
     children: [
