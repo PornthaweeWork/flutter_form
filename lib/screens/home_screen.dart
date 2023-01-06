@@ -9,6 +9,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
   var gender = 'male';
+  var newsletter = false;
+  var driver = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               buildTextField(),
               buildRadio(),
+              buildCheckbox(),
               ElevatedButton(
                 onPressed: () {
                   print('Name: ${nameController.text} ${surnameController.text}');
-                   print('Gender: ${gender}');
+                  print('Gender: ${gender}');
+                  print('Newsletter: ${newsletter}');
+                  print('Driver: ${driver}');
                 },
                 child: Text('บันทึก'),
               ),
@@ -34,6 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buildCheckbox() => Column(
+    children: [
+      CheckboxListTile(
+        title: Text('สมัครรับจดหมายข่าว'),
+        value: newsletter, 
+        onChanged: (value) => setState(() => newsletter = value ?? false),
+      ),
+      CheckboxListTile(
+        title: Text('มีใบขับขี่รถยนต์'),
+        value: driver, 
+        onChanged: (value) => setState(() => driver = value ?? false),
+      ),
+    ],
+  );
 
   Widget buildRadio() => Column(
     children: [
