@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var driver = false;
   var marry = false;
   var child = false;
+  var age = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               buildRadio(),
               buildCheckbox(),
               buildSwitch(),
+              buildSlider(),
               ElevatedButton(
                 onPressed: () {
                   print('Name: ${nameController.text} ${surnameController.text}');
@@ -35,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print('Driver: ${driver}');
                   print('Marry: ${marry}');
                   print('Child: ${child}');
+                  print('Age: ${age}');
                 },
                 child: Text('บันทึก'),
               ),
@@ -44,6 +47,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buildSlider() => Slider(
+    value: age,
+    min: 0.0,
+    max:100.0,
+    label: age.round().toString(),
+    divisions: 100,
+    onChanged: (value) => setState(() => age = value),
+  );
 
   Widget buildSwitch() => Column(
     children: [
