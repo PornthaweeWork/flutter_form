@@ -18,6 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
   var channels = ['Facebook','Twitter','Instagram','Line'].map((e) => DropdownMenuItem(child: Text(e), value: e)).toList();
   var channel = 'Facebook';
 
+  var email = '';
+  final key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
               buildSwitch(),
               buildSlider(),
               buildDropdown(),
+              buildForm(),
               ElevatedButton(
                 onPressed: () {
+                  if (!(key.currentState?.validate() ?? false)) return;
+                  key.currentState?.save();
                   print('Name: ${nameController.text} ${surnameController.text}');
                   print('Gender: ${gender}');
                   print('Newsletter: ${newsletter}');
@@ -43,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print('Child: ${child}');
                   print('Age: ${age}');
                   print('Channel: ${channel}');
+                  print('Email: ${email}');
                 },
                 child: Text('บันทึก'),
               ),
@@ -52,6 +59,27 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buildForm() => Form(
+    key: key,
+    child: Column(
+      children: [
+        TextFormField(
+          decoration: InputDecoration(labelText: 'email'),
+          maxLength: 50,
+          keyboardType: TextInputType.emailAddress,
+          onSaved: (value) => email = value ?? '',
+          validator: (value) {
+            value ??= '';
+            if (value.isEmpty) return 'กรุณากรอกอีเมล';
+            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'อีเมลไม่ถูกต้อง';
+
+            return null;
+          },
+        ),
+      ],
+    ),
+  );
 
   Widget buildDropdown() => DropdownButton(
     value: channel,
