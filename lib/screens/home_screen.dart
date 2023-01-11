@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form/screens/about_us_screen.dart';
 import 'package:flutter_form/widget/checkbox_form_field.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -53,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print('Channel: ${channel}');
                   print('Email: ${email}');
                   print('Agreement: ${agreement}');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutUsScreen()));
                 },
                 child: Text('บันทึก'),
               ),
